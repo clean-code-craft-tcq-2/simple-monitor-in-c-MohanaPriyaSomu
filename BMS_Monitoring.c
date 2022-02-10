@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <sting.h>
+#include <string.h>
 
 #define MIN_THRESHOLD_BATT_TEMP 0
 #define MAX_THRESHOLD_BATT_TEMP 45
