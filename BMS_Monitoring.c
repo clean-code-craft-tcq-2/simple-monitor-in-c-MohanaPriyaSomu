@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <assert.h>
 
 #define MIN_THRESHOLD_BATT_TEMP 0
 #define MAX_THRESHOLD_BATT_TEMP 45
@@ -30,7 +31,7 @@ int limitConditionCheck(float param, float max_threshold) {
 	return 1;
 }
 
-struct BMS
+struct BattManagementSystem
 {
     float Temperature;
     float stateOfCharge;
@@ -71,15 +72,15 @@ int checkBatteryChargeRate(float chargeRate){
 
 int main()
 {
-    struct BMS bms = {30,60,0.5};
+    struct BattManagementSystem bms = {30,60,0.5};
     assert(checkBatteryTemperature(bms.Temperature) == 1);
 	assert(checkBatterySoC(bms.stateOfCharge) == 1);
 	assert(checkBatteryChargeRate(bms.batteryChargeRate) == 1);
-	struct BMS bms = {50,90,0.9};
+	struct BattManagementSystem bms = {50,90,0.9};
     assert(checkBatteryTemperature(bms.Temperature) == 0);
 	assert(checkBatterySoC(bms.stateOfCharge) == 0);
 	assert(checkBatteryChargeRate(bms.batteryChargeRate) == 0);
-	struct BMS bms = {60,10,1.4};
+	struct BattManagementSystem bms = {60,10,1.4};
     assert(checkBatteryTemperature(bms.Temperature) == 0);
 	assert(checkBatterySoC(bms.stateOfCharge) == 0);
 	assert(checkBatteryChargeRate(bms.batteryChargeRate) == 0);
