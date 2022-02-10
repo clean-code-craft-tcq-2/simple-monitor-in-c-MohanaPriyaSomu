@@ -78,12 +78,12 @@ int main()
 	assert(checkBatterySoC(bms.stateOfCharge) == 1);
 	assert(checkBatteryChargeRate(bms.batteryChargeRate) == 1);
 	struct BattManagementSystem bms1 = {50,90,0.9};
-    assert(checkBatteryTemperature(bms.Temperature) == 0);
-	assert(checkBatterySoC(bms.stateOfCharge) == 0);
-	assert(checkBatteryChargeRate(bms.batteryChargeRate) == 0);
+    assert(checkBatteryTemperature(bms1.Temperature) == 0);
+	assert(checkBatterySoC(bms1.stateOfCharge) == 0);
+	assert(checkBatteryChargeRate(bms1.batteryChargeRate) == 0);
 	struct BattManagementSystem bms2 = {60,10,1.4};
-    assert(checkBatteryTemperature(bms.Temperature) == 0);
-	assert(checkBatterySoC(bms.stateOfCharge) == 0);
-	assert(checkBatteryChargeRate(bms.batteryChargeRate) == 0);
+    assert(checkBatteryTemperature(bms2.Temperature) == 0);
+	assert(checkBatterySoC(bms2.stateOfCharge) == 0);
+	assert(checkBatteryChargeRate(bms2.batteryChargeRate) == 0);
 } 
  
