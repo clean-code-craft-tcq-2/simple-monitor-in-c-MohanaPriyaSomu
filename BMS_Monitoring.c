@@ -54,7 +54,7 @@ int checkBatteryTemperature(float temperature)
 	validity = rangeConditionCheck(temperature, MIN_THRESHOLD_BATT_TEMP, MAX_THRESHOLD_BATT_TEMP);
 	validityCheck(validity, "Temperature");
 	return validity;
-)
+}
 
 int checkBatterySoC(float SoC) {
 	int validity;
@@ -76,11 +76,11 @@ int main()
     assert(checkBatteryTemperature(bms.Temperature) == 1);
 	assert(checkBatterySoC(bms.stateOfCharge) == 1);
 	assert(checkBatteryChargeRate(bms.batteryChargeRate) == 1);
-	struct BattManagementSystem bms = {50,90,0.9};
+	struct BattManagementSystem bms1 = {50,90,0.9};
     assert(checkBatteryTemperature(bms.Temperature) == 0);
 	assert(checkBatterySoC(bms.stateOfCharge) == 0);
 	assert(checkBatteryChargeRate(bms.batteryChargeRate) == 0);
-	struct BattManagementSystem bms = {60,10,1.4};
+	struct BattManagementSystem bms2 = {60,10,1.4};
     assert(checkBatteryTemperature(bms.Temperature) == 0);
 	assert(checkBatterySoC(bms.stateOfCharge) == 0);
 	assert(checkBatteryChargeRate(bms.batteryChargeRate) == 0);
