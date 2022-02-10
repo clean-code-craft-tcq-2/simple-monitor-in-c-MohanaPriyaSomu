@@ -41,9 +41,10 @@ struct BattManagementSystem
 void validityCheck (int validity, char* param)
 {
 	char consoleOutput[100];
+	char message[50] = "out of range";
 	if (validity == 0)
 	{
-		consoleOutput=strcat(param,"out of range");
+		consoleOutput=strcat(param, message);
 		printf("%s \n", consoleOutput);
 	}
 }
