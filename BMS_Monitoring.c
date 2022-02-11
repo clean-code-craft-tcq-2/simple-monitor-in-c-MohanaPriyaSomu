@@ -41,11 +41,23 @@ struct BattManagementSystem
 void validityCheck (int validity, const char* param)
 {
 	char consoleOutput[100];
+	char alert[100] = "outt of range";
+	char alert1[100];
+	strcpy(alert1, alert);
 	if (validity == 0)
 	{
-		consoleOutput=strcat(param, "out of range");
+		consoleOutput=strcat(param, alert1);
 		printf("%s \n", consoleOutput);
 	}
+}
+int statusCheck(int status, const char* parameter) {
+	char statement[100];
+	strcpy(statement, alertString);
+	if (status == 0) {
+		strcat(statement, parameter);
+		(*fpPrintOnConsole)(statement);
+	}
+	return status;
 }
 
 int checkBatteryTemperature(float temperature) 
@@ -74,15 +86,15 @@ int main()
 {
     struct BattManagementSystem bms = {30,60,0.5};
     assert(checkBatteryTemperature(bms.Temperature) == 1);
-	assert(checkBatterySoC(bms.stateOfCharge) == 1);
-	assert(checkBatteryChargeRate(bms.batteryChargeRate) == 1);
-	struct BattManagementSystem bms1 = {50,90,0.9};
+    assert(checkBatterySoC(bms.stateOfCharge) == 1);
+    assert(checkBatteryChargeRate(bms.batteryChargeRate) == 1);
+    struct BattManagementSystem bms1 = {50,90,0.9};
     assert(checkBatteryTemperature(bms1.Temperature) == 0);
-	assert(checkBatterySoC(bms1.stateOfCharge) == 0);
-	assert(checkBatteryChargeRate(bms1.batteryChargeRate) == 0);
-	struct BattManagementSystem bms2 = {60,10,1.4};
+    assert(checkBatterySoC(bms1.stateOfCharge) == 0);
+    assert(checkBatteryChargeRate(bms1.batteryChargeRate) == 0);
+    struct BattManagementSystem bms2 = {60,10,1.4};
     assert(checkBatteryTemperature(bms2.Temperature) == 0);
-	assert(checkBatterySoC(bms2.stateOfCharge) == 0);
-	assert(checkBatteryChargeRate(bms2.batteryChargeRate) == 0);
+    assert(checkBatterySoC(bms2.stateOfCharge) == 0);
+    assert(checkBatteryChargeRate(bms2.batteryChargeRate) == 0);
 } 
  
