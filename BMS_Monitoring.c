@@ -50,15 +50,6 @@ void validityCheck (int validity, char* param)
 		printf("%s \n", consoleOutput);
 	}
 }
-int statusCheck(int status, const char* parameter) {
-	char statement[100];
-	strcpy(statement, alertString);
-	if (status == 0) {
-		strcat(statement, parameter);
-		(*fpPrintOnConsole)(statement);
-	}
-	return status;
-}
 
 int checkBatteryTemperature(float temperature) 
 {
