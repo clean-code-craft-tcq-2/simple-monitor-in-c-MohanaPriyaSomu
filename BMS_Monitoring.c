@@ -76,6 +76,7 @@ int checkBatteryChargeRate(float chargeRate){
 void main()
 {
 	struct BattManagementSystem inp;
+	char temperatureUnit;
 	scanf("Enter the parameters: %f %f %f", &inp.Temperature, &inp.stateOfCharge, &inp.batteryChargeRate);
 	scanf("Please specify unit for temperature (F/K/C): %c", &temperatureUnit);
 	switch (temperatureUnit)
