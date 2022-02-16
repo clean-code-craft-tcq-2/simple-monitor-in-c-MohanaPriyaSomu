@@ -8,7 +8,7 @@
 #define MAX_THRESHOLD_BATT_SoC 80
 #define MAX_THRESHOLD_BATT_CHARGE_RATE 0.8 
 
-void validityCheck (int validity, const char* param);
+void validityCheck (int validity, char* param);
 int checkBatteryTemperature(float temperature);
 int checkBatterySoC(float SoC);
 int checkBatteryChargeRate(float chargeRate);
@@ -38,12 +38,12 @@ struct BattManagementSystem
     float batteryChargeRate;
 };
 
-void validityCheck (int validity, const char* param)
+void validityCheck (int validity, char* param)
 {
 	char alert[100] = "out of range";
 	if (validity == 0)
 	{
-		//strcat(param, alert);
+		strcat(param, alert);
 		printf("%s \n", param);
 	}
 }
