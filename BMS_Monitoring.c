@@ -89,6 +89,7 @@ void main()
 			break;
 		default:
 			/*do nothing*/
+			break;
 	}
 	assert(checkBatteryTemperature(inp.Temperature) == 1);
         assert(checkBatterySoC(inp.stateOfCharge) == 1);
