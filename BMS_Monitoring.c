@@ -38,7 +38,7 @@ struct BattManagementSystem
     float batteryChargeRate;
 };
 
-char validityCheck (int validity, char* param)
+void validityCheck (int validity, const char* param)
 {
 	char alert[100] = "outt of range";
 	if (validity == 0)
