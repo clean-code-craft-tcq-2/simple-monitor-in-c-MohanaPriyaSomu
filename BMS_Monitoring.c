@@ -90,7 +90,7 @@ void main()
 		case 'C':
 			/*no conversion necessary*/
 			break;
-		case default:
+		default:
 			/*do nothing*/
 	}
 	assert(checkBatteryTemperature(inp.Temperature) == 1);
