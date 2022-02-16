@@ -40,14 +40,11 @@ struct BattManagementSystem
 
 char validityCheck (int validity, char* param)
 {
-	char consoleOutput[100];
 	char alert[100] = "outt of range";
-	char alert1[100];
-	strcpy(alert1, alert);
 	if (validity == 0)
 	{
-		consoleOutput=strcat(param, alert1);
-		printf("%s \n", consoleOutput);
+		strcat(param, alert);
+		printf("%s \n", param);
 	}
 }
 
