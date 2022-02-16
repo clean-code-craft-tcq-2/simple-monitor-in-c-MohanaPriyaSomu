@@ -87,27 +87,10 @@ void main()
 		case 'K':
 			inp.Temperature = inp.Temperature - 273.15;
 			break;
-		case 'C':
-			/*no conversion necessary*/
-			break;
 		default:
 			/*do nothing*/
 	}
 	assert(checkBatteryTemperature(inp.Temperature) == 1);
-    assert(checkBatterySoC(inp.stateOfCharge) == 1);
-    assert(checkBatteryChargeRate(inp.batteryChargeRate) == 1);
-	/*
-	struct BattManagementSystem bms = {30,60,0.5};
-    assert(checkBatteryTemperature(bms.Temperature) == 1);
-    assert(checkBatterySoC(bms.stateOfCharge) == 1);
-    assert(checkBatteryChargeRate(bms.batteryChargeRate) == 1);
-    struct BattManagementSystem bms1 = {50,90,0.9};
-    assert(checkBatteryTemperature(bms1.Temperature) == 0);
-    assert(checkBatterySoC(bms1.stateOfCharge) == 0);
-    assert(checkBatteryChargeRate(bms1.batteryChargeRate) == 0);
-    struct BattManagementSystem bms2 = {60,10,1.4};
-    assert(checkBatteryTemperature(bms2.Temperature) == 0);
-    assert(checkBatterySoC(bms2.stateOfCharge) == 0);
-    assert(checkBatteryChargeRate(bms2.batteryChargeRate) == 0);
-	*/
+        assert(checkBatterySoC(inp.stateOfCharge) == 1);
+        assert(checkBatteryChargeRate(inp.batteryChargeRate) == 1);
 } 
