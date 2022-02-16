@@ -84,5 +84,6 @@ int main()
     assert(checkBatteryTemperature(bms2.Temperature) == 0);
     assert(checkBatterySoC(bms2.stateOfCharge) == 0);
     assert(checkBatteryChargeRate(bms2.batteryChargeRate) == 0);
+    return 0;
 } 
  
