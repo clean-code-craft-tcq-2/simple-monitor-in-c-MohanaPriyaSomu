@@ -17,7 +17,7 @@ int limitConditionCheck(float param, float max_threshold);
 
 int rangeConditionCheck(float param, int min_threshold, int max_threshold)
 {
-	if((param < min_threshold) && (param > max_threshold))
+	if((param > min_threshold) && (param < max_threshold))
 	{
 		return 1;
 	}
@@ -25,10 +25,10 @@ int rangeConditionCheck(float param, int min_threshold, int max_threshold)
 }
 
 int limitConditionCheck(float param, float max_threshold) {
-	if (param  > max_threshold) {
-		return 0;
+	if (param < max_threshold) {
+		return 1;
 	}
-	return 1;
+	return 0;
 }
 
 struct BattManagementSystem
