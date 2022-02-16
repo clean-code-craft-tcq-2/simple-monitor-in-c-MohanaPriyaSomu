@@ -70,7 +70,7 @@ int checkBatteryChargeRate(float chargeRate){
 	return validity;
 }
 
-int main()
+void main()
 {
     struct BattManagementSystem bms = {30,60,0.5};
     assert(checkBatteryTemperature(bms.Temperature) == 1);
@@ -84,6 +84,5 @@ int main()
     assert(checkBatteryTemperature(bms2.Temperature) == 0);
     assert(checkBatterySoC(bms2.stateOfCharge) == 0);
     assert(checkBatteryChargeRate(bms2.batteryChargeRate) == 0);
-    return 0;
 } 
  
