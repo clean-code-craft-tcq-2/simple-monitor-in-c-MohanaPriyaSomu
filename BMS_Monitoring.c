@@ -81,13 +81,13 @@ void main()
 	scanf("Please specify unit for temperature (F/K/C): %c", &temperatureUnit);
 	switch (temperatureUnit)
 	{
-		case F:
+		case 'F':
 			inp.Temperature = (inp.Temperature - 32) * 5 / 9;
 			break;
-		case K:
+		case 'K':
 			inp.Temperature = inp.Temperature - 273.15;
 			break;
-		case C:
+		case 'C':
 			/*no conversion necessary*/
 			break;
 		case default:
