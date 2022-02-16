@@ -75,7 +75,28 @@ int checkBatteryChargeRate(float chargeRate){
 
 void main()
 {
-    struct BattManagementSystem bms = {30,60,0.5};
+	struct BattManagementSystem inp;
+	scanf("Enter the parameters: %f %f %f", &inp.Temperature, &inp.stateOfCharge, &inp.batteryChargeRate);
+	scanf("Please specify unit for temperature (F/K/C): %c", &temperatureUnit);
+	switch (temperatureUnit)
+	{
+		case F:
+			inp.Temperature = (inp.Temperature - 32) * 5 / 9;
+			break;
+		case K:
+			inp.Temperature = inp.Temperature - 273.15;
+			break;
+		case C:
+			/*no conversion necessary*/
+			break;
+		case default:
+			/*do nothing*/
+	}
+	assert(checkBatteryTemperature(inp.Temperature) == 1);
+    assert(checkBatterySoC(inp.stateOfCharge) == 1);
+    assert(checkBatteryChargeRate(inp.batteryChargeRate) == 1);
+	/*
+	struct BattManagementSystem bms = {30,60,0.5};
     assert(checkBatteryTemperature(bms.Temperature) == 1);
     assert(checkBatterySoC(bms.stateOfCharge) == 1);
     assert(checkBatteryChargeRate(bms.batteryChargeRate) == 1);
@@ -87,5 +108,5 @@ void main()
     assert(checkBatteryTemperature(bms2.Temperature) == 0);
     assert(checkBatterySoC(bms2.stateOfCharge) == 0);
     assert(checkBatteryChargeRate(bms2.batteryChargeRate) == 0);
+	*/
 } 
- 
