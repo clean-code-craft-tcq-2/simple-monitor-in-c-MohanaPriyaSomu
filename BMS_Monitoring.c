@@ -40,10 +40,10 @@ struct BattManagementSystem
 
 void validityCheck (int validity, const char* param)
 {
-	char alert[100] = "outt of range";
+	char alert[100] = "out of range";
 	if (validity == 0)
 	{
-		strcat(param, alert);
+		//strcat(param, alert);
 		printf("%s \n", param);
 	}
 }
@@ -56,7 +56,8 @@ int checkBatteryTemperature(float temperature)
 	return validity;
 }
 
-int checkBatterySoC(float SoC) {
+int checkBatterySoC(float SoC) 
+{
 	int validity;
 	validity = rangeConditionCheck(SoC, MIN_THRESHOLD_BATT_SoC, MAX_THRESHOLD_BATT_SoC);
 	validityCheck(validity, "State of Charge");
