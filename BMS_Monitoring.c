@@ -7,31 +7,31 @@
 #define MIN_THRESHOLD_BATT_SoC 20
 #define MAX_THRESHOLD_BATT_SoC 80
 #define MAX_THRESHOLD_BATT_CHARGE_RATE 0.8 
+#define LOW_BREACH  1
+#define LOW_WARNING 2
+#define NORMAL 3
+#define HIGH_WARNING 4
+#define HIGH_BREACH 5
+/*
+0 to 20: LOW_SOC_BREACH
+21 to 24: LOW_SOC_WARNING
+25 to 75: NORMAL
+76 to 79: HIGH_SOC_WARNING
+80 to 100: HIGH_SOC_BREACH
 
-void validityCheck (int validity, char* param);
+0 to 2.25: LOW_TEMP_WARNING
+2.25 to 42.75: NORMAL
+42.75 to 45: HIGH_TEMP_WARNING
+45 TO 50: HIGH_TEMP_BREACH
+*/
+
 int checkBatteryTemperature(float temperature, char tempFormat);
 int checkBatterySoC(float SoC);
 int checkBatteryChargeRate(float chargeRate);
-int rangeConditionCheck(float param, int min_threshold, int max_threshold);
-int limitConditionCheck(float param, float max_threshold);
 float tempUnitConversion(float temp, char tempUnit);
+int monitorCondition (float paramVal, float paramMinThreshold, float paramMaxThreshold)
+bool BatteryStateOk(float temp, float SoC, float battChargeRate, char tempUnit)
 	
-int rangeConditionCheck(float param, int min_threshold, int max_threshold)
-{
-	if((param > min_threshold) && (param < max_threshold))
-	{
-		return 1;
-	}
-	return 0;
-}
-
-int limitConditionCheck(float param, float max_threshold) {
-	if (param < max_threshold) {
-		return 1;
-	}
-	return 0;
-}
-
 struct BattManagementSystem
 {
     float Temperature;
@@ -40,41 +40,53 @@ struct BattManagementSystem
     char tempFormat;
 };
 
-void validityCheck (int validity, char* param)
+int monitorCondition (float paramVal, float paramMinThreshold, float paramMaxThreshold)
 {
-	char alert[100] = "out of range";
-	char param1[100];
-	strcpy(param1,param);
-	if (validity == 0)
+	int condition; 
+	ToleranceVal = 0.05 * paramMaxThreshold;
+	if (paramVal <= paramMinThreshold)
 	{
-		strcat(param1, alert);
-		printf("%s \n", param1);
+		condition = 1;
 	}
+	if ((paramVal > paramMinThreshold) && (paramVal <= (paramMinThreshold+ToleranceVal)))
+	{
+		condition = 2;
+	}
+	if ((paramVal > (paramMinThreshold+ToleranceVal)) && (paramVal > (paramMinThreshold+ToleranceVal)))
+	{
+		condition = 3;
+	}
+	if ((paramVal >= (paramMaxThreshold-ToleranceVal)) && (paramVal < paramMaxThreshold))
+	{
+		condition = 4;
+	}
+	if (paramVal >= paramMaxThreshold)
+	{
+		condition = 5;
+	}
+	return condition;
 }
 
 int checkBatteryTemperature(float temperature, char tempFormat) 
 {
-	int validity;
+	int temp_condition;
 	tempUnitConversion(temperature, tempFormat);
-	validity = rangeConditionCheck(temperature, MIN_THRESHOLD_BATT_TEMP, MAX_THRESHOLD_BATT_TEMP);
-	validityCheck(validity, "Temperature");
-	return validity;
+	temp_condition = monitorCondition(temperature, MIN_THRESHOLD_BATT_TEMP, MAX_THRESHOLD_BATT_TEMP);
+	return temp_condition;
 }
 
 int checkBatterySoC(float SoC) 
 {
-	int validity;
-	validity = rangeConditionCheck(SoC, MIN_THRESHOLD_BATT_SoC, MAX_THRESHOLD_BATT_SoC);
-	validityCheck(validity, "State of Charge");
-	return validity;
+	int SoC_condition;
+	SoC_condition = monitorCondition(SoC, MIN_THRESHOLD_BATT_SoC, MAX_THRESHOLD_BATT_SoC);
+	return SoC_condition;
 }
 
 int checkBatteryChargeRate(float chargeRate)
 {
-	int validity;
-	validity = limitConditionCheck(chargeRate, MAX_THRESHOLD_BATT_CHARGE_RATE);
-	validityCheck(validity, "Charge Rate");
-	return validity;
+	int battChargeRate_condition;
+	battChargeRate_condition = monitorCondition(chargeRate, MAX_THRESHOLD_BATT_CHARGE_RATE);
+	return battChargeRate_condition;
 }
 
 float tempUnitConversion(float temp, char tempUnit)
@@ -94,18 +106,28 @@ float tempUnitConversion(float temp, char tempUnit)
 	return temp;
 }
 
+bool BatteryStateOk(float temp, float SoC, float battChargeRate, char tempUnit)
+{
+	cond_temp = checkBatteryTemperature(temp, tempUnit);
+	cond_SoC = checkBatterySoC(SoC);
+	cond_battChargeRate = checkBatteryChargeRate(battChage);
+	if ((cond_temp == 3) && (cond_SoC == 3) && (cond_battChargeRate == 3))
+	{
+		BattCond = 1;
+	}
+	else
+	{
+		BattCond = 0;
+	}
+	return BatteryCond;
+}
+
 void main()
 {
     struct BattManagementSystem bms = {30,60,0.5,'C'};
-    assert(checkBatteryTemperature(bms.Temperature, bms.tempFormat) == 1);
-    assert(checkBatterySoC(bms.stateOfCharge) == 1);
-    assert(checkBatteryChargeRate(bms.batteryChargeRate) == 1);
+    assert(BatteryStateOk(bms.Temperature, bms.stateOfCharge, bms.batteryChargeRate, bms.tempFormat) == 1);
     struct BattManagementSystem bms1 = {50,90,0.9,'F'};
-    assert(checkBatteryTemperature(bms1.Temperature, bms1.tempFormat) == 0);
-    assert(checkBatterySoC(bms1.stateOfCharge) == 0);
-    assert(checkBatteryChargeRate(bms1.batteryChargeRate) == 0);
+    assert(BatteryStateOk(bms.Temperature, bms.stateOfCharge, bms.batteryChargeRate, bms.tempFormat) == 1);	
     struct BattManagementSystem bms2 = {60,10,1.4,'K'};
-    assert(checkBatteryTemperature(bms2.Temperature, bms2.tempFormat) == 0);
-    assert(checkBatterySoC(bms2.stateOfCharge) == 0);
-    assert(checkBatteryChargeRate(bms2.batteryChargeRate) == 0);
+    assert(BatteryStateOk(bms.Temperature, bms.stateOfCharge, bms.batteryChargeRate, bms.tempFormat) == 1);
 } 
