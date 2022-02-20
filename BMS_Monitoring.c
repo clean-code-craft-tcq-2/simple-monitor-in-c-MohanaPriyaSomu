@@ -9,12 +9,13 @@
 #define MAX_THRESHOLD_BATT_CHARGE_RATE 0.8 
 
 void validityCheck (int validity, char* param);
-int checkBatteryTemperature(float temperature);
+int checkBatteryTemperature(float temperature, char tempFormat);
 int checkBatterySoC(float SoC);
 int checkBatteryChargeRate(float chargeRate);
 int rangeConditionCheck(float param, int min_threshold, int max_threshold);
 int limitConditionCheck(float param, float max_threshold);
-
+float tempUnitConversion(float temp, char tempUnit);
+	
 int rangeConditionCheck(float param, int min_threshold, int max_threshold)
 {
 	if((param > min_threshold) && (param < max_threshold))
@@ -68,7 +69,8 @@ int checkBatterySoC(float SoC)
 	return validity;
 }
 
-int checkBatteryChargeRate(float chargeRate){
+int checkBatteryChargeRate(float chargeRate)
+{
 	int validity;
 	validity = limitConditionCheck(chargeRate, MAX_THRESHOLD_BATT_CHARGE_RATE);
 	validityCheck(validity, "Charge Rate");
