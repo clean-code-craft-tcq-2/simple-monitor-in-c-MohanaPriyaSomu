@@ -36,6 +36,7 @@ struct BattManagementSystem
     float Temperature;
     float stateOfCharge;
     float batteryChargeRate;
+    char tempFormat;
 };
 
 void validityCheck (int validity, char* param)
@@ -50,9 +51,10 @@ void validityCheck (int validity, char* param)
 	}
 }
 
-int checkBatteryTemperature(float temperature) 
+int checkBatteryTemperature(float temperature, char tempFormat) 
 {
 	int validity;
+	tempUnitConversion(temperature, tempFormat);
 	validity = rangeConditionCheck(temperature, MIN_THRESHOLD_BATT_TEMP, MAX_THRESHOLD_BATT_TEMP);
 	validityCheck(validity, "Temperature");
 	return validity;
@@ -73,25 +75,35 @@ int checkBatteryChargeRate(float chargeRate){
 	return validity;
 }
 
-void main()
+float tempUnitConversion(float temp, char tempUnit)
 {
-	struct BattManagementSystem inp;
-	char temperatureUnit;
-	scanf("Enter the parameters: %f %f %f", &inp.Temperature, &inp.stateOfCharge, &inp.batteryChargeRate);
-	scanf("Please specify unit for temperature (F/K/C): %c", &temperatureUnit);
-	switch (temperatureUnit)
+	switch (tempUnit)
 	{
 		case 'F':
-			inp.Temperature = (inp.Temperature - 32) * 5 / 9;
+			temp = (temp - 32) * 5 / 9;
 			break;
 		case 'K':
-			inp.Temperature = inp.Temperature - 273.15;
+			temp = temp - 273.15;
 			break;
 		default:
 			/*do nothing*/
 			break;
 	}
-	assert(checkBatteryTemperature(inp.Temperature) == 1);
-        assert(checkBatterySoC(inp.stateOfCharge) == 1);
-        assert(checkBatteryChargeRate(inp.batteryChargeRate) == 1);
+	return temp;
+}
+
+void main()
+{
+    struct BattManagementSystem bms = {30,60,0.5,'C'};
+    assert(checkBatteryTemperature(bms.Temperature, bms.tempFormat) == 1);
+    assert(checkBatterySoC(bms.stateOfCharge) == 1);
+    assert(checkBatteryChargeRate(bms.batteryChargeRate) == 1);
+    struct BattManagementSystem bms1 = {50,90,0.9,'F'};
+    assert(checkBatteryTemperature(bms1.Temperature, bms1.tempFormat) == 0);
+    assert(checkBatterySoC(bms1.stateOfCharge) == 0);
+    assert(checkBatteryChargeRate(bms1.batteryChargeRate) == 0);
+    struct BattManagementSystem bms2 = {60,10,1.4,'K'};
+    assert(checkBatteryTemperature(bms2.Temperature, bms2.tempFormat) == 0);
+    assert(checkBatterySoC(bms2.stateOfCharge) == 0);
+    assert(checkBatteryChargeRate(bms2.batteryChargeRate) == 0);
 } 
