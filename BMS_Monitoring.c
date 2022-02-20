@@ -48,21 +48,25 @@ int monitorCondition (float paramVal, float paramMinThreshold, float paramMaxThr
 	{
 		condition = 1;
 	}
-	if ((paramVal > paramMinThreshold) && (paramVal <= (paramMinThreshold+ToleranceVal)))
+	else if ((paramVal > paramMinThreshold) && (paramVal <= (paramMinThreshold+ToleranceVal)))
 	{
 		condition = 2;
 	}
-	if ((paramVal > (paramMinThreshold+ToleranceVal)) && (paramVal > (paramMinThreshold+ToleranceVal)))
+	else if ((paramVal > (paramMinThreshold+ToleranceVal)) && (paramVal > (paramMinThreshold+ToleranceVal)))
 	{
 		condition = 3;
 	}
-	if ((paramVal >= (paramMaxThreshold-ToleranceVal)) && (paramVal < paramMaxThreshold))
+	else if ((paramVal >= (paramMaxThreshold-ToleranceVal)) && (paramVal < paramMaxThreshold))
 	{
 		condition = 4;
 	}
-	if (paramVal >= paramMaxThreshold)
+	else if (paramVal >= paramMaxThreshold)
 	{
 		condition = 5;
+	}
+	else
+	{
+		/*do nothing*/
 	}
 	return condition;
 }
