@@ -9,7 +9,7 @@
 #define MAX_THRESHOLD_BATT_CHARGE_RATE 0.8 
 #define LOW_BREACH  1
 #define LOW_WARNING 2
-#define NORMAL 3
+#define NORMAL 0
 #define HIGH_WARNING 4
 #define HIGH_BREACH 5
 /*
