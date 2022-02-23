@@ -53,10 +53,6 @@ int monitorCondition_lowerThreshold (float paramVal, float paramMinThreshold, fl
 	{
 		condition_lowerThreshold = 2;
 	}
-	else if ((paramVal > (paramMinThreshold+ToleranceVal)) && (paramVal > (paramMinThreshold+ToleranceVal)))
-	{
-		condition_lowerThreshold = 3;
-	}
 	return condition_lowerThreshold;
 }
 
@@ -75,15 +71,25 @@ int monitorCondition_UpperThreshold (float paramVal, float paramMaxThreshold)
 	return condition_UpperThreshold;
 }
 
+/*int normalCondition (float paramVal, float paramMinThreshold, float paramMaxThreshold)
+{
+	int condition_normal;
+	if ((paramVal > (paramMinThreshold+ToleranceVal)) && (paramVal > (paramMinThreshold+ToleranceVal)))
+	{
+		condition_normal = 3;
+	}
+	return condition_normal;
+}*/
 
 int checkBatteryTemperature(float temperature, char tempFormat) 
 {
 	int temp_condition;
-	tempUnitConversion(temperature, tempFormat);
+	tempUnitConversion(temperature, tempFormat);		
 	temp_condition_1 = monitorCondition_lowerThreshold(temperature, MIN_THRESHOLD_BATT_TEMP);
 	temp_condition_2 = monitorCondition_upperThreshold(temperature, MAX_THRESHOLD_BATT_TEMP);
 	temp_condition = temp_condition_1 + temp_condition_2;
 	return temp_condition;
+
 }
 
 int checkBatterySoC(float SoC) 
@@ -126,13 +132,13 @@ bool BatteryStateOk(float temp, float SoC, float battChargeRate, char tempUnit)
 	cond_temp = checkBatteryTemperature(temp, tempUnit);
 	cond_SoC = checkBatterySoC(SoC);
 	cond_battChargeRate = checkBatteryChargeRate(battChage);
-	if ((cond_temp == 3) && (cond_SoC == 3) && (cond_battChargeRate == 3))
+	if ((cond_temp != 3) || (cond_SoC != 3) || (cond_battChargeRate != 3))
 	{
-		BattCond = 1;
+		BattCond = 0;
 	}
 	else
 	{
-		BattCond = 0;
+		BattCond = 1;
 	}
 	return BatteryCond;
 }
