@@ -8,11 +8,11 @@ int monitorCondition_lowerThreshold (float paramVal, float paramMinThreshold, fl
 	int lowerToleranceLevel = paramMinThreshold+ToleranceVal;
 	if (paramVal <= paramMinThreshold)
 	{
-		condition_lowerThreshold = 1;
+		condition_lowerThreshold = LOW_BREACH;
 	}
 	else if ((paramVal > paramMinThreshold) && (paramVal <= lowerToleranceLevel))
 	{
-		condition_lowerThreshold = 2;
+		condition_lowerThreshold = LOW_WWARNING;
 	}
 	return condition_lowerThreshold;
 }
@@ -24,11 +24,11 @@ int monitorCondition_upperThreshold (float paramVal, float paramMaxThreshold)
 	int upperToleranceLevel = paramMaxThreshold-ToleranceVal;
 	if ((paramVal >= upperToleranceLevel) && (paramVal < paramMaxThreshold))
 	{
-		condition_upperThreshold = 4;
+		condition_upperThreshold = HIGH_WARNING;
 	}
 	else if (paramVal >= paramMaxThreshold)
 	{
-		condition_upperThreshold = 5;
+		condition_upperThreshold = HIGH_BREACH;
 	}
 	return condition_upperThreshold;
 }
