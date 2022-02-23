@@ -130,9 +130,9 @@ float tempUnitConversion(float temp, char tempUnit)
 int BatteryStateOk(float temp, float SoC, float battChargeRate, char tempUnit)
 {
 	int battCond;
-	cond_temp = checkBatteryTemperature(temp, tempUnit);
-	cond_SoC = checkBatterySoC(SoC);
-	cond_battChargeRate = checkBatteryChargeRate(battChargeRate);
+	int cond_temp = checkBatteryTemperature(temp, tempUnit);
+	int cond_SoC = checkBatterySoC(SoC);
+	int cond_battChargeRate = checkBatteryChargeRate(battChargeRate);
 	if ((cond_temp != 3) || (cond_SoC != 3) || (cond_battChargeRate != 3))
 	{
 		battCond = 0;
