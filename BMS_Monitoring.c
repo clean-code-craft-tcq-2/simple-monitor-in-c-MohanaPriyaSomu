@@ -29,7 +29,8 @@ int checkBatteryTemperature(float temperature, char tempFormat);
 int checkBatterySoC(float SoC);
 int checkBatteryChargeRate(float chargeRate);
 float tempUnitConversion(float temp, char tempUnit);
-int monitorCondition (float paramVal, float paramMinThreshold, float paramMaxThreshold)
+int monitorCondition_lowerThreshold (float paramVal, float paramMinThreshold);
+int monitorCondition_UpperThreshold (float paramVal, float paramMaxThreshold);
 bool BatteryStateOk(float temp, float SoC, float battChargeRate, char tempUnit)
 	
 struct BattManagementSystem
@@ -40,56 +41,66 @@ struct BattManagementSystem
     char tempFormat;
 };
 
-int monitorCondition (float paramVal, float paramMinThreshold, float paramMaxThreshold)
+int monitorCondition_lowerThreshold (float paramVal, float paramMinThreshold, float paramMaxThreshold)
 {
-	int condition; 
+	int condition_lowerThreshold; 
 	ToleranceVal = 0.05 * paramMaxThreshold;
 	if (paramVal <= paramMinThreshold)
 	{
-		condition = 1;
+		condition_lowerUpperThreshold = 1;
 	}
 	else if ((paramVal > paramMinThreshold) && (paramVal <= (paramMinThreshold+ToleranceVal)))
 	{
-		condition = 2;
+		condition_lowerThreshold = 2;
 	}
 	else if ((paramVal > (paramMinThreshold+ToleranceVal)) && (paramVal > (paramMinThreshold+ToleranceVal)))
 	{
-		condition = 3;
+		condition_lowerThreshold = 3;
 	}
-	else if ((paramVal >= (paramMaxThreshold-ToleranceVal)) && (paramVal < paramMaxThreshold))
+	return condition_lowerThreshold;
+}
+
+int monitorCondition_UpperThreshold (float paramVal, float paramMaxThreshold)
+{
+	int condition_upperThreshold;
+	ToleranceVal = 0.05 * paramMaxThreshold;
+	if ((paramVal >= (paramMaxThreshold-ToleranceVal)) && (paramVal < paramMaxThreshold))
 	{
-		condition = 4;
+		condition_UpperThreshold = 4;
 	}
 	else if (paramVal >= paramMaxThreshold)
 	{
-		condition = 5;
+		condition_UpperThreshold = 5;
 	}
-	else
-	{
-		/*do nothing*/
-	}
-	return condition;
+	return condition_UpperThreshold;
 }
+
 
 int checkBatteryTemperature(float temperature, char tempFormat) 
 {
 	int temp_condition;
 	tempUnitConversion(temperature, tempFormat);
-	temp_condition = monitorCondition(temperature, MIN_THRESHOLD_BATT_TEMP, MAX_THRESHOLD_BATT_TEMP);
+	temp_condition_1 = monitorCondition_lowerThreshold(temperature, MIN_THRESHOLD_BATT_TEMP);
+	temp_condition_2 = monitorCondition_upperThreshold(temperature, MAX_THRESHOLD_BATT_TEMP);
+	temp_condition = temp_condition_1 + temp_condition_2;
 	return temp_condition;
 }
 
 int checkBatterySoC(float SoC) 
 {
 	int SoC_condition;
-	SoC_condition = monitorCondition(SoC, MIN_THRESHOLD_BATT_SoC, MAX_THRESHOLD_BATT_SoC);
+	SoC_condition_1 = monitorCondition_lowerThreshold(SoC, MIN_THRESHOLD_BATT_SoC);
+	SoC_condition_2 = monitorCondition_upperThreshold(SoC, MAX_THRESHOLD_BATT_SoC);
+	SoC_condition = SoC_condition_1 + SoC_condition_2;
 	return SoC_condition;
 }
 
 int checkBatteryChargeRate(float chargeRate)
 {
 	int battChargeRate_condition;
-	battChargeRate_condition = monitorCondition(chargeRate, MAX_THRESHOLD_BATT_CHARGE_RATE);
+	battChargeRate_condition_1 = monitorCondition_lowerThreshold(chargeRate, MAX_THRESHOLD_BATT_CHARGE_RATE);
+	battChargeRate_condition_2 = monitorCondition_upperThreshold(chargeRate, MAX_THRESHOLD_BATT_CHARGE_RATE);
+	battChargeRate_condition = battChargeRate_condition_1 + battChargeRate_condition_2;
 	return battChargeRate_condition;
 }
 
