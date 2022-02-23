@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "BMS_Monitoring.h"
 
 int monitorCondition_lowerThreshold (float paramVal, float paramMinThreshold, float paramMaxThreshold)
 {
