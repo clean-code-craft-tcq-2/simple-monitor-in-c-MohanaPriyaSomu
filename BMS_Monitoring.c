@@ -30,7 +30,7 @@ int checkBatterySoC(float SoC);
 int checkBatteryChargeRate(float chargeRate);
 float tempUnitConversion(float temp, char tempUnit);
 int monitorCondition_lowerThreshold (float paramVal, float paramMinThreshold, float paramMaxThreshold);
-int monitorCondition_UpperThreshold (float paramVal, float paramMaxThreshold);
+int monitorCondition_upperThreshold (float paramVal, float paramMaxThreshold);
 int BatteryStateOk(float temp, float SoC, float battChargeRate, char tempUnit);
 	
 struct BattManagementSystem
@@ -56,7 +56,7 @@ int monitorCondition_lowerThreshold (float paramVal, float paramMinThreshold, fl
 	return condition_lowerThreshold;
 }
 
-int monitorCondition_UpperThreshold (float paramVal, float paramMaxThreshold)
+int monitorCondition_upperThreshold (float paramVal, float paramMaxThreshold)
 {
 	int condition_upperThreshold;
 	int ToleranceVal = 0.05 * paramMaxThreshold;
