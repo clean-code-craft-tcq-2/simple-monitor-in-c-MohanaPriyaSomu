@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <string.h>
 #include <assert.h>
 
 #define MIN_THRESHOLD_BATT_TEMP 0
@@ -74,21 +73,4 @@ float tempUnitConversion(float temp, char tempUnit)
 		temp = temp - 273.15;
 	}
 	return temp;
-}
-
-int BatteryStateOk(float temp, float SoC, float battChargeRate, char tempUnit)
-{
-	int battCond;
-	int cond_temp = checkBatteryTemperature(temp, tempUnit);
-	int cond_SoC = checkBatterySoC(SoC);
-	int cond_battChargeRate = checkBatteryChargeRate(battChargeRate);
-	if ((cond_temp != 3) || (cond_SoC != 3) || (cond_battChargeRate != 3))
-	{
-		battCond = 0;
-	}
-	else
-	{
-		battCond = 1;
-	}
-	return battCond;
 }
