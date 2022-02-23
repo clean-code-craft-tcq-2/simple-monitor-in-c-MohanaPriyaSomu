@@ -44,7 +44,7 @@ int BatteryStateOk(float temp, float SoC, float battChargeRate, char tempUnit)
 	return battState;	
 }
 
-void main()
+int main()
 {
     struct BattManagementSystem bms = {30,60,0.5,'C'};
     assert(BatteryStateOk(bms.Temperature, bms.stateOfCharge, bms.batteryChargeRate, bms.tempFormat) == 0);
