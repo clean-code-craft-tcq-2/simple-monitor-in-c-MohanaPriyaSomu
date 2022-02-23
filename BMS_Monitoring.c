@@ -31,7 +31,7 @@ int checkBatteryChargeRate(float chargeRate);
 float tempUnitConversion(float temp, char tempUnit);
 int monitorCondition_lowerThreshold (float paramVal, float paramMinThreshold);
 int monitorCondition_UpperThreshold (float paramVal, float paramMaxThreshold);
-boolean BatteryStateOk(float temp, float SoC, float battChargeRate, char tempUnit);
+int BatteryStateOk(float temp, float SoC, float battChargeRate, char tempUnit);
 	
 struct BattManagementSystem
 {
@@ -41,7 +41,7 @@ struct BattManagementSystem
     char tempFormat;
 };
 
-int monitorCondition_lowerThreshold (float paramVal, float paramMinThreshold, float paramMaxThreshold)
+int monitorCondition_lowerThreshold (float paramVal, float paramMinThreshold)
 {
 	int condition_lowerThreshold; 
 	ToleranceVal = 0.05 * paramMaxThreshold;
@@ -59,16 +59,16 @@ int monitorCondition_lowerThreshold (float paramVal, float paramMinThreshold, fl
 int monitorCondition_UpperThreshold (float paramVal, float paramMaxThreshold)
 {
 	int condition_upperThreshold;
-	ToleranceVal = 0.05 * paramMaxThreshold;
+	int ToleranceVal = 0.05 * paramMaxThreshold;
 	if ((paramVal >= (paramMaxThreshold-ToleranceVal)) && (paramVal < paramMaxThreshold))
 	{
-		condition_UpperThreshold = 4;
+		condition_upperThreshold = 4;
 	}
 	else if (paramVal >= paramMaxThreshold)
 	{
-		condition_UpperThreshold = 5;
+		condition_upperThreshold = 5;
 	}
-	return condition_UpperThreshold;
+	return condition_upperThreshold;
 }
 
 /*int normalCondition (float paramVal, float paramMinThreshold, float paramMaxThreshold)
@@ -104,7 +104,7 @@ int checkBatterySoC(float SoC)
 int checkBatteryChargeRate(float chargeRate)
 {
 	int battChargeRate_condition;
-	battChargeRate_condition_1 = monitorCondition_lowerThreshold(chargeRate, MAX_THRESHOLD_BATT_CHARGE_RATE);
+	battChargeRate_condition_1 = monitorCondition_lowerThreshold(chargeRate, MIN_THRESHOLD_BATT_CHARGE_RATE);
 	battChargeRate_condition_2 = monitorCondition_upperThreshold(chargeRate, MAX_THRESHOLD_BATT_CHARGE_RATE);
 	battChargeRate_condition = battChargeRate_condition_1 + battChargeRate_condition_2;
 	return battChargeRate_condition;
@@ -127,7 +127,7 @@ float tempUnitConversion(float temp, char tempUnit)
 	return temp;
 }
 
-boolean BatteryStateOk(float temp, float SoC, float battChargeRate, char tempUnit)
+int BatteryStateOk(float temp, float SoC, float battChargeRate, char tempUnit)
 {
 	cond_temp = checkBatteryTemperature(temp, tempUnit);
 	cond_SoC = checkBatterySoC(SoC);
