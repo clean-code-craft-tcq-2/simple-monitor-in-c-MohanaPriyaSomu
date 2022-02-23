@@ -12,7 +12,7 @@ int monitorCondition_lowerThreshold (float paramVal, float paramMinThreshold, fl
 	}
 	else if ((paramVal > paramMinThreshold) && (paramVal <= lowerToleranceLevel))
 	{
-		condition_lowerThreshold = LOW_WWARNING;
+		condition_lowerThreshold = LOW_WARNING;
 	}
 	return condition_lowerThreshold;
 }
