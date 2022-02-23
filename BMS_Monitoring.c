@@ -31,7 +31,7 @@ int checkBatteryChargeRate(float chargeRate);
 float tempUnitConversion(float temp, char tempUnit);
 int monitorCondition_lowerThreshold (float paramVal, float paramMinThreshold);
 int monitorCondition_UpperThreshold (float paramVal, float paramMaxThreshold);
-bool BatteryStateOk(float temp, float SoC, float battChargeRate, char tempUnit);
+boolean BatteryStateOk(float temp, float SoC, float battChargeRate, char tempUnit);
 	
 struct BattManagementSystem
 {
@@ -127,7 +127,7 @@ float tempUnitConversion(float temp, char tempUnit)
 	return temp;
 }
 
-bool BatteryStateOk(float temp, float SoC, float battChargeRate, char tempUnit)
+boolean BatteryStateOk(float temp, float SoC, float battChargeRate, char tempUnit)
 {
 	cond_temp = checkBatteryTemperature(temp, tempUnit);
 	cond_SoC = checkBatterySoC(SoC);
@@ -148,7 +148,7 @@ void main()
     struct BattManagementSystem bms = {30,60,0.5,'C'};
     assert(BatteryStateOk(bms.Temperature, bms.stateOfCharge, bms.batteryChargeRate, bms.tempFormat) == 1);
     struct BattManagementSystem bms1 = {50,90,0.9,'F'};
-    assert(BatteryStateOk(bms.Temperature, bms.stateOfCharge, bms.batteryChargeRate, bms.tempFormat) == 1);	
+    assert(BatteryStateOk(bms1.Temperature, bms1.stateOfCharge, bms1.batteryChargeRate, bms1.tempFormat) == 1);	
     struct BattManagementSystem bms2 = {60,10,1.4,'K'};
-    assert(BatteryStateOk(bms.Temperature, bms.stateOfCharge, bms.batteryChargeRate, bms.tempFormat) == 1);
+    assert(BatteryStateOk(bms2.Temperature, bms2.stateOfCharge, bms2.batteryChargeRate, bms2.tempFormat) == 1);
 } 
