@@ -102,11 +102,7 @@ int checkBatterySoC(float SoC)
 
 int checkBatteryChargeRate(float chargeRate)
 {
-	int battChargeRate_condition;
-	int battChargeRate_condition_1 = monitorCondition_lowerThreshold(chargeRate, MIN_THRESHOLD_BATT_CHARGE_RATE, 
-MAX_THRESHOLD_BATT_CHARGE_RATE);
-	int battChargeRate_condition_2 = monitorCondition_upperThreshold(chargeRate, MAX_THRESHOLD_BATT_CHARGE_RATE);
-	battChargeRate_condition = battChargeRate_condition_1 + battChargeRate_condition_2;
+	int battChargeRate_condition = monitorCondition_upperThreshold(chargeRate, MAX_THRESHOLD_BATT_CHARGE_RATE);
 	return battChargeRate_condition;
 }
 
