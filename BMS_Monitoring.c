@@ -47,7 +47,7 @@ int monitorCondition_lowerThreshold (float paramVal, float paramMinThreshold, fl
 	int ToleranceVal = 0.05 * paramMaxThreshold;
 	if (paramVal <= paramMinThreshold)
 	{
-		condition_lowerUpperThreshold = 1;
+		condition_lowerThreshold = 1;
 	}
 	else if ((paramVal > paramMinThreshold) && (paramVal <= (paramMinThreshold+ToleranceVal)))
 	{
@@ -85,8 +85,8 @@ int checkBatteryTemperature(float temperature, char tempFormat)
 {
 	int temp_condition;
 	temperature = tempUnitConversion(temperature, tempFormat);		
-	temp_condition_1 = monitorCondition_lowerThreshold(temperature, MIN_THRESHOLD_BATT_TEMP, MAX_THRESHOLD_BATT_TEMP );
-	temp_condition_2 = monitorCondition_upperThreshold(temperature, MAX_THRESHOLD_BATT_TEMP);
+	int temp_condition_1 = monitorCondition_lowerThreshold(temperature, MIN_THRESHOLD_BATT_TEMP, MAX_THRESHOLD_BATT_TEMP );
+	int temp_condition_2 = monitorCondition_upperThreshold(temperature, MAX_THRESHOLD_BATT_TEMP);
 	temp_condition = temp_condition_1 + temp_condition_2;
 	return temp_condition;
 }
@@ -94,8 +94,8 @@ int checkBatteryTemperature(float temperature, char tempFormat)
 int checkBatterySoC(float SoC) 
 {
 	int SoC_condition;
-	SoC_condition_1 = monitorCondition_lowerThreshold(SoC, MIN_THRESHOLD_BATT_SoC, MAX_THRESHOLD_BATT_SoC);
-	SoC_condition_2 = monitorCondition_upperThreshold(SoC, MAX_THRESHOLD_BATT_SoC);
+	int SoC_condition_1 = monitorCondition_lowerThreshold(SoC, MIN_THRESHOLD_BATT_SoC, MAX_THRESHOLD_BATT_SoC);
+	int SoC_condition_2 = monitorCondition_upperThreshold(SoC, MAX_THRESHOLD_BATT_SoC);
 	SoC_condition = SoC_condition_1 + SoC_condition_2;
 	return SoC_condition;
 }
@@ -103,9 +103,9 @@ int checkBatterySoC(float SoC)
 int checkBatteryChargeRate(float chargeRate)
 {
 	int battChargeRate_condition;
-	battChargeRate_condition_1 = monitorCondition_lowerThreshold(chargeRate, MIN_THRESHOLD_BATT_CHARGE_RATE, 
+	int battChargeRate_condition_1 = monitorCondition_lowerThreshold(chargeRate, MIN_THRESHOLD_BATT_CHARGE_RATE, 
 MAX_THRESHOLD_BATT_CHARGE_RATE);
-	battChargeRate_condition_2 = monitorCondition_upperThreshold(chargeRate, MAX_THRESHOLD_BATT_CHARGE_RATE);
+	int battChargeRate_condition_2 = monitorCondition_upperThreshold(chargeRate, MAX_THRESHOLD_BATT_CHARGE_RATE);
 	battChargeRate_condition = battChargeRate_condition_1 + battChargeRate_condition_2;
 	return battChargeRate_condition;
 }
