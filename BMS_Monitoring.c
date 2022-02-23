@@ -36,27 +36,20 @@ int checkBatteryChargeRate(float chargeRate)
 
 int BatteryStateOk(float temp, float SoC, float battChargeRate, char tempUnit)
 {
-	int battCond;
+	int battState;
 	int cond_temp = checkBatteryTemperature(temp, tempUnit);
 	int cond_SoC = checkBatterySoC(SoC);
 	int cond_battChargeRate = checkBatteryChargeRate(battChargeRate);
-	if ((cond_temp != 3) || (cond_SoC != 3) || (cond_battChargeRate != 3))
-	{
-		battCond = 0;
-	}
-	else
-	{
-		battCond = 1;
-	}
-	return battCond;
+	battState = (cond_temp || cond_SoC || cond_battChargeRate);
+	return battState;	
 }
 
 void main()
 {
     struct BattManagementSystem bms = {30,60,0.5,'C'};
-    assert(BatteryStateOk(bms.Temperature, bms.stateOfCharge, bms.batteryChargeRate, bms.tempFormat) == 1);
+    assert(BatteryStateOk(bms.Temperature, bms.stateOfCharge, bms.batteryChargeRate, bms.tempFormat) == 0);
     struct BattManagementSystem bms1 = {50,90,0.9,'F'};
-    assert(BatteryStateOk(bms1.Temperature, bms1.stateOfCharge, bms1.batteryChargeRate, bms1.tempFormat) == 0);	
+    assert(BatteryStateOk(bms1.Temperature, bms1.stateOfCharge, bms1.batteryChargeRate, bms1.tempFormat) != 0);	
     struct BattManagementSystem bms2 = {60,10,1.4,'K'};
-    assert(BatteryStateOk(bms2.Temperature, bms2.stateOfCharge, bms2.batteryChargeRate, bms2.tempFormat) == 0);
+    assert(BatteryStateOk(bms2.Temperature, bms2.stateOfCharge, bms2.batteryChargeRate, bms2.tempFormat) != 0);
 } 
