@@ -28,7 +28,7 @@
 extern int checkBatteryTemperature(float temperature, char tempFormat);
 extern int checkBatterySoC(float SoC);
 extern int checkBatteryChargeRate(float chargeRate);
-float tempUnitConversion(float temp, char tempUnit);
+extern float tempUnitConversion(float temp, char tempUnit);
 extern int monitorCondition_lowerThreshold (float paramVal, float paramMinThreshold, float paramMaxThreshold);
 extern int monitorCondition_upperThreshold (float paramVal, float paramMaxThreshold);
 extern int BatteryStateOk(float temp, float SoC, float battChargeRate, char tempUnit);
