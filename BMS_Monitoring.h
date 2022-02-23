@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include <assert.h>
 
 #define MIN_THRESHOLD_BATT_TEMP 0
@@ -28,49 +29,7 @@ extern int checkBatteryTemperature(float temperature, char tempFormat);
 extern int checkBatterySoC(float SoC);
 extern int checkBatteryChargeRate(float chargeRate);
 float tempUnitConversion(float temp, char tempUnit);
-int monitorCondition_lowerThreshold (float paramVal, float paramMinThreshold, float paramMaxThreshold);
-int monitorCondition_upperThreshold (float paramVal, float paramMaxThreshold);
+extern int monitorCondition_lowerThreshold (float paramVal, float paramMinThreshold, float paramMaxThreshold);
+extern int monitorCondition_upperThreshold (float paramVal, float paramMaxThreshold);
 extern int BatteryStateOk(float temp, float SoC, float battChargeRate, char tempUnit);
 	
-int monitorCondition_lowerThreshold (float paramVal, float paramMinThreshold, float paramMaxThreshold)
-{
-	int condition_lowerThreshold; 
-	int ToleranceVal = 0.05 * paramMaxThreshold;
-	if (paramVal <= paramMinThreshold)
-	{
-		condition_lowerThreshold = 1;
-	}
-	else if ((paramVal > paramMinThreshold) && (paramVal <= (paramMinThreshold+ToleranceVal)))
-	{
-		condition_lowerThreshold = 2;
-	}
-	return condition_lowerThreshold;
-}
-
-int monitorCondition_upperThreshold (float paramVal, float paramMaxThreshold)
-{
-	int condition_upperThreshold;
-	int ToleranceVal = 0.05 * paramMaxThreshold;
-	if ((paramVal >= (paramMaxThreshold-ToleranceVal)) && (paramVal < paramMaxThreshold))
-	{
-		condition_upperThreshold = 4;
-	}
-	else if (paramVal >= paramMaxThreshold)
-	{
-		condition_upperThreshold = 5;
-	}
-	return condition_upperThreshold;
-}
-
-float tempUnitConversion(float temp, char tempUnit)
-{
-	if (tempUnit == 'F')
-	{
-		temp = (temp - 32) * 5 / 9;
-	}
-	else if (tempUnit == 'K')
-	{
-		temp = temp - 273.15;
-	}
-	return temp;
-}
