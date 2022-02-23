@@ -142,7 +142,7 @@ int BatteryStateOk(float temp, float SoC, float battChargeRate, char tempUnit)
 
 void main()
 {
-    struct BattManagementSystem bms = {30,60,0.5,'C'};
+    struct BattManagementSystem bms = {30,60,0.5,'K'};
     assert(BatteryStateOk(bms.Temperature, bms.stateOfCharge, bms.batteryChargeRate, bms.tempFormat) == 1);
     struct BattManagementSystem bms1 = {50,90,0.9,'F'};
     assert(BatteryStateOk(bms1.Temperature, bms1.stateOfCharge, bms1.batteryChargeRate, bms1.tempFormat) == 1);	
