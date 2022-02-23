@@ -31,7 +31,7 @@ int checkBatteryChargeRate(float chargeRate);
 float tempUnitConversion(float temp, char tempUnit);
 int monitorCondition_lowerThreshold (float paramVal, float paramMinThreshold);
 int monitorCondition_UpperThreshold (float paramVal, float paramMaxThreshold);
-bool BatteryStateOk(float temp, float SoC, float battChargeRate, char tempUnit)
+bool BatteryStateOk(float temp, float SoC, float battChargeRate, char tempUnit);
 	
 struct BattManagementSystem
 {
